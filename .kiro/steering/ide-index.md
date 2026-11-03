@@ -4,7 +4,11 @@ inclusion: always
 
 # Use the IDE-index subagents for code intelligence
 
-The JetBrains IDE index (MCP server `ide-index`) is semantic: it beats grep-and-read for navigation, refactors and diagnostics. Its tool schemas are large, so only three subagents carry them. Do not call `ide_*` tools yourself; delegate.
+The JetBrains IDE index (MCP server `ide-index`) is semantic: it beats grep-and-read for navigation, refactors and diagnostics. Its full schema set is large, so the main agent carries only a small set of cheap lookups and three subagents carry the rest.
+
+Call these directly (single answer, short output): `ide_find_definition`, `ide_find_references`, `ide_find_implementations`, `ide_find_class`, `ide_find_file`, `ide_symbol_info`, `ide_file_structure`, `ide_diagnostics`, `ide_index_status`, `ide_sync_files`. If a reference/implementation list looks long (more than ~15 hits) or needs follow-up hops, delegate it to `ide-reader` next time instead.
+
+Everything else (call/type hierarchy, project diagnostics, refactors, build, tests, project management) goes through a subagent.
 
 | Need | Subagent |
 |---|---|

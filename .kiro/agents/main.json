@@ -1,0 +1,56 @@
+{
+  "name": "main",
+  "description": "Main agent with native tools, a small set of cheap IDE-index lookups, and subagents for everything heavier.",
+  "prompt": "You are the main agent. Keep your context for reasoning, design and the final answer. Use the IDE-index tools directly for quick, single-answer lookups (definition, references, implementations, class/file search, symbol info, file structure, diagnostics). Delegate heavier or multi-step work as described in the steering files: ide-reader for call/type hierarchy and wide searches, ide-builder for refactors/build/tests, ide-admin only on explicit request, sidekick for shell and non-code side tasks. Only cite file:line that appears in tool output.",
+  "mcpServers": {
+    "ide-index": {
+      "type": "http",
+      "url": "http://127.0.0.1:29170/index-mcp/streamable-http"
+    }
+  },
+  "tools": [
+    "@builtin",
+    "@ide-index/ide_diagnostics",
+    "@ide-index/ide_find_definition",
+    "@ide-index/ide_find_references",
+    "@ide-index/ide_find_implementations",
+    "@ide-index/ide_find_class",
+    "@ide-index/ide_find_file",
+    "@ide-index/ide_symbol_info",
+    "@ide-index/ide_file_structure",
+    "@ide-index/ide_index_status",
+    "@ide-index/ide_sync_files"
+  ],
+  "allowedTools": [
+    "fs_read",
+    "grep",
+    "glob",
+    "code",
+    "@ide-index/ide_diagnostics",
+    "@ide-index/ide_find_definition",
+    "@ide-index/ide_find_references",
+    "@ide-index/ide_find_implementations",
+    "@ide-index/ide_find_class",
+    "@ide-index/ide_find_file",
+    "@ide-index/ide_symbol_info",
+    "@ide-index/ide_file_structure",
+    "@ide-index/ide_index_status",
+    "@ide-index/ide_sync_files"
+  ],
+  "toolsSettings": {
+    "subagent": {
+      "availableAgents": [
+        "sidekick",
+        "ide-reader",
+        "ide-builder",
+        "ide-admin"
+      ],
+      "trustedAgents": [
+        "ide-reader"
+      ]
+    }
+  },
+  "resources": [
+    "file://.kiro/steering/**/*.md"
+  ]
+}

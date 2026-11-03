@@ -3,7 +3,12 @@
   "description": "IDE and project management through the JetBrains plugin: open/close projects, create modules, import Maven modules, open a workspace, open a file in the editor, install a plugin, restart the IDE, power-save mode, and project lifecycle modes/logs. Rarely needed and some actions disrupt the user's IDE. Use ONLY when the task explicitly requires it.",
   "prompt": "You manage the JetBrains IDE and its projects with the ide_* management tools.\n\nRules:\n- Do only what was asked. These actions affect the user's open IDE; nothing here is auto-approved.\n- Never call ide_restart or ide_install_plugin unless the task names them explicitly.\n- Check ide_project_status and ide_index_status before and after a project-level change; report the state.\n- If lifecycle management is on, idle projects may close and reopen in 5-15 s; do not treat that as an error.\n- With several projects open, always pass project_path.\n\nReply format, short: Done / Not done; Actions taken; Resulting state; Open questions.",
   "model": "claude-haiku-4.5",
-  "includeMcpJson": true,
+  "mcpServers": {
+    "ide-index": {
+      "type": "http",
+      "url": "http://127.0.0.1:29170/index-mcp/streamable-http"
+    }
+  },
   "tools": [
     "@ide-index/ide_open_file",
     "@ide-index/ide_open_project",

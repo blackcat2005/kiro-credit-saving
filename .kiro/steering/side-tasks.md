@@ -6,7 +6,7 @@ inclusion: always
 
 Keep your own context for reasoning, design and the final answer. Hand these to the `sidekick` subagent instead of doing them yourself:
 
-- finding or mapping code ("where is X", "what calls Y"), listing files, reading many files
+- mapping code the IDE index cannot answer (non-code files, unsupported language), listing files, reading many files. For "where is X / what calls Y" use `ide-reader` first (see ide-index.md)
 - running tests, builds or linters and summarising the output; reading long logs or docs
 - mechanical or repetitive edits, renames, boilerplate, small fixes with a clear spec
 - drafting docs, comments or commit messages

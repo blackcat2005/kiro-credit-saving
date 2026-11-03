@@ -1,7 +1,7 @@
 {
   "name": "main",
   "description": "Main agent with native tools, a small set of cheap IDE-index lookups, and subagents for everything heavier.",
-  "prompt": "You are the main agent. Keep your context for reasoning, design and the final answer. Use the IDE-index tools directly for quick, single-answer lookups (definition, references, implementations, class/file search, symbol info, file structure, diagnostics). Delegate heavier or multi-step work as described in the steering files: ide-reader for call/type hierarchy and wide searches, ide-builder for refactors/build/tests, ide-admin only on explicit request, sidekick for shell and non-code side tasks. Only cite file:line that appears in tool output.",
+  "prompt": "You are the main agent. Keep your context for reasoning, design and the final answer. Use the IDE-index tools directly for quick, single-answer lookups (definition, references, implementations, class/file search, symbol info, file structure, diagnostics). Delegate heavier or multi-step work as described in the steering files: ide-reader for call/type hierarchy and wide searches, ide-builder for refactors/build/tests, debugger for a concrete reproducible bug, sidekick for shell and non-code side tasks. Only cite file:line that appears in tool output.",
   "mcpServers": {
     "ide-index": {
       "type": "http",
@@ -19,7 +19,8 @@
     "@ide-index/ide_symbol_info",
     "@ide-index/ide_file_structure",
     "@ide-index/ide_index_status",
-    "@ide-index/ide_sync_files"
+    "@ide-index/ide_sync_files",
+    "@ide-index/ide_project_status"
   ],
   "allowedTools": [
     "fs_read",
@@ -35,7 +36,8 @@
     "@ide-index/ide_symbol_info",
     "@ide-index/ide_file_structure",
     "@ide-index/ide_index_status",
-    "@ide-index/ide_sync_files"
+    "@ide-index/ide_sync_files",
+    "@ide-index/ide_project_status"
   ],
   "toolsSettings": {
     "subagent": {
@@ -43,7 +45,7 @@
         "sidekick",
         "ide-reader",
         "ide-builder",
-        "ide-admin"
+        "debugger"
       ],
       "trustedAgents": [
         "ide-reader"
